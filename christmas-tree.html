@@ -177,18 +177,13 @@
 
         // ================= 配置 =================
         const CONFIG = {
-            mode: '圣诞树',
-            particleCount: 15000,
             treeTotalInstances: 2200, 
             sparkleCount: 1200, 
             bloomStrength: 1.0, 
             handState: '未检测',
             gestureScale: 1.0, 
-            autoRotate: true,
             photoSize: 3.5
         };
-
-        const MODES = ['圣诞树', '地球与月球', '爱心', '花朵', '土星', '烟花'];
 
         // 全局逻辑变量
         let isPinching = false;
@@ -198,6 +193,8 @@
         let smoothHandOpenDist = 0.0;
         let pinchTriggered = false; 
         let currentTargetScale = 1.0; 
+        let handOffsetX = 0;
+        let handOffsetY = 0;
 
         // ================= 1. 2D Canvas 流星系统 =================
         const canvas = document.getElementById('meteor-canvas');
@@ -581,17 +578,6 @@
         
         musicBtn.addEventListener('click', toggleMusic);
         
-        // ================= 6. 粒子系统 =================
-        const pGeo = new THREE.BufferGeometry();
-        const pPos = new Float32Array(CONFIG.particleCount * 3);
-        pGeo.setAttribute('position', new THREE.BufferAttribute(pPos, 3));
-        const particleSystem = new THREE.Points(pGeo, new THREE.PointsMaterial({
-            color: 0x00d2ff, size: 0.25, transparent: true, opacity: 0.9, blending: THREE.AdditiveBlending, depthWrite: false,
-            map: new THREE.TextureLoader().load('https://raw.githubusercontent.com/mrdoob/three.js/master/examples/textures/sprites/spark1.png')
-        }));
-        scene.add(particleSystem);
-        function updateParticleShape(mode) { /* 省略 */ }
-
         // ================= 手势识别 =================
         const videoElement = document.getElementsByClassName('input_video')[0];
         
